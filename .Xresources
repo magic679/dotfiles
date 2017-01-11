@@ -1,0 +1,12 @@
+*.reverseVideo: on
+*.font:7x11
+
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+! Use extended color scheme
+rofi.color-enabled:                  true
+rofi.color-normal:                   argb:d72f343f,#f3f4f5,#2f343f,#2f343f,#9575cd
+rofi.color-urgent:                   argb:d72f343f,#f3f4f5,#2f343f,#2f343f,#9575cd
+rofi.color-active:                   argb:d72f343f,#f3f4f5,#2f343f,#2f343f,#9575cd
+rofi.color-window:                   argb:d72f343f

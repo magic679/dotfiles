@@ -1,0 +1,180 @@
+
+font pango:System San Francisco Display 8
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+set $workspace4 "4:"
+
+# start a terminal
+bindsym Mod1+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym Mod1+q kill
+
+# start rofi (a program launcher)
+# copied from tutorial (github.com/bookercodes/dotfiles/blob/ubuntu/.i3/config)
+bindsym Mod1+space exec rofi -show run -width 100 -padding 800 -opacity "85" -hide-scrollbar -font "System San Francisco Display 13" 
+
+# focus
+bindsym Mod1+Left focus left
+bindsym Mod1+Down focus down
+bindsym Mod1+Up focus up
+bindsym Mod1+Right focus right
+
+# move focused tile in the direction
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
+
+# split in horizontal orientation
+bindsym Mod1+h split v
+
+# split in vertical orientation
+bindsym Mod1+v split h
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym Mod1+s layout stacking
+#bindsym Mod1+w layout tabbed
+#bindsym Mod1+e layout toggle split
+
+# toggle tiling / floating
+#bindsym Mod1+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+#bindsym Mod1+space focus mode_toggle
+
+# focus the parent container
+#bindsym Mod1+a focus parent
+
+# focus the child container
+#bindsym Mod1+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod1+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod1+minus scratchpad show
+
+set $workspace1 "1: Terminals "
+set $workspace2 "2: Chromium "
+set $workspace3 "3: Music "
+set $workspace4 "4:"
+set $workspace5 "5:"
+set $workspace6 "6: Firefox "
+set $workspace7 "7: Android Studio "
+set $workspace8 "8:"
+set $workspace9 "9:"
+set $workspace10 "10:"
+
+# switch to workspace
+bindsym Mod1+1 workspace $workspace1
+bindsym Mod1+2 workspace $workspace2
+bindsym Mod1+3 workspace $workspace3
+bindsym Mod1+4 workspace $workspace4
+bindsym Mod1+5 workspace $workspace5
+bindsym Mod1+6 workspace $workspace6
+bindsym Mod1+7 workspace $workspace7
+bindsym Mod1+8 workspace $workspace8
+bindsym Mod1+9 workspace $workspace9
+bindsym Mod1+0 workspace $workspace10
+
+# move focused container to workspace
+bindsym Mod1+Shift+1 move container to workspace $workspace1
+bindsym Mod1+Shift+2 move container to workspace $workspace2
+bindsym Mod1+Shift+3 move container to workspace $workspace3
+bindsym Mod1+Shift+4 move container to workspace $workspace4
+bindsym Mod1+Shift+5 move container to workspace $workspace5
+bindsym Mod1+Shift+6 move container to workspace $workspace6
+bindsym Mod1+Shift+7 move container to workspace $workspace7
+bindsym Mod1+Shift+8 move container to workspace $workspace8
+bindsym Mod1+Shift+9 move container to workspace $workspace9
+bindsym Mod1+Shift+0 move container to workspace $workspace10
+
+# assign default programs to a workspace
+assign [class="UXTerm"] $workspace1
+assign [class="Chromium"] $workspace2
+assign [class="Rhythmbox"] $workspace3
+assign [class="jetbrains-studio"] $workspace7
+assign [class="Firefox"] $workspace6
+
+# special casese
+for_window [class="Thunar"] floating enabled
+for_window [class="Lxappearance"] floating enabled
+
+# reload the configuration file
+bindsym Mod1+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+mode "resize" {
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod1+r mode "resize"
+
+#lock
+bindsym Mod1+l exec "$HOME/.i3/scripts/lock.sh $HOME/.i3/images/lock.png"
+
+#function keys
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
+bindsym XF86AudioMute exec amixer -q set Master toggle
+
+# stop mouse hover focus
+focus_follows_mouse no
+
+# hide edge border
+hide_edge_borders both
+
+set $black #000000
+set $white #ffffff
+set $light-grey #aaaaaa
+set $purple #9a86f9
+set $blue #3a85ff
+set $light-green #00ff00
+
+# window colors
+#			border		background		text
+client.focused		$blue		$black			$white
+client.unfocused	$light-grey	$light-grey		$white	
+client.focused_inactive $light-grey	$light-grey		$white
+
+bar {
+        status_command i3blocks -c ~/.i3/i3blocks.conf
+	colors {
+		background-color $light-grey
+		separator #757575
+		#			border			background		text
+		focused_workspace	$blue			$blue			$white
+		inactive_workspace	$light_grey		$light_grey		$white
+	}
+	font pango:System San Francisco Display 8
+	position top
+}#
+
+# file explorer
+bindsym Mod4+e exec thunar
+
+exec i3-config-wizard
+
+exec rhythmbox
+exec_always feh --bg-max /home/stefano/Dropbox/Background\ Pics/hagoromo-hamura-seal.jpg
+exec i3-sensible-terminal
+exec chromium
+exec compton -f
+exec dropbox &
+exec nm-applet &
